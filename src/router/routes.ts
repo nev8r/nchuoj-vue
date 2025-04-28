@@ -1,0 +1,170 @@
+import ACCESS_ENUM from "@/access/accessEnum";
+
+const routes = [
+    {
+        path:'/user',
+        name:"用户",
+        meta:{
+            hideInMenu:true,
+        },
+        component:()=>import("@/layouts/UserLayout.vue"),
+        children:[
+            {
+                path:'/user/login',
+                name:"登录",
+                meta:{
+                    ordinary:true,
+                },
+                component:()=>import("@/views/user/UserLoginView.vue")
+            },{
+                path:'/user/register',
+                name:"注册",
+                meta:{
+                    ordinary:true,
+                },
+                component:()=>import("@/views/user/UserRegisterView.vue")
+            },
+        ]
+    },{
+        path:'/',
+        name:"主页",
+        meta:{
+            needLogin:false,
+            ordinary:true,
+        },
+        component: () => import("@/layouts/BasicLayout.vue")
+    },
+    {
+        path:'/submit',
+        name:"请求",
+        meta:{
+            needLogin:true,
+        },
+        component:()=>import("@/layouts/BasicLayout.vue"),
+        children:[
+            {
+                path:'/submit/question/:id',
+                name:"在线做题",
+                props:true,
+                meta:{
+                    access:ACCESS_ENUM.USER,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/question/DoQuestionView.vue")
+            },
+            {
+                path:'/submit/exam/:id',
+                name:"在线考试",
+                props:true,
+                meta:{
+                    access:ACCESS_ENUM.USER,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/exam/DoExamView.vue")
+            }
+        ]
+    },{
+        path:'/noAuth',
+        name:"无访问权限",
+        meta:{
+            needLogin:false,
+            ordinary:true,
+        },
+        component:()=>import("@/views/NoAuthView.vue")
+    },
+    {
+        path:'/list',
+        name:"列表",
+        meta:{
+            needLogin:true,
+        },
+        component:()=>import("@/layouts/BasicLayout.vue"),
+        children:[
+            {
+                path:'/list/manageQuestion',
+                name:"题目管理",
+                meta:{
+                    access:ACCESS_ENUM.ADMIN,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/question/ManageQuestionView.vue")
+            },{
+                path:'/list/question',
+                name:"题目列表",
+                meta:{
+                    access:ACCESS_ENUM.USER,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/question/ListQuestionView.vue")
+            },{
+                path:'/list/submitQuestion',
+                name:"判题记录列表",
+                meta:{
+                    access:ACCESS_ENUM.USER,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/question/ListSubmitQuestionView.vue")
+            },{
+                path:'/list/exam',
+                name:"考试列表",
+                meta:{
+                    access:ACCESS_ENUM.USER,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/exam/ExamListView.vue")
+            },{
+                path:'/list/examManger',
+                name:"考试管理列表",
+                meta:{
+                    access:ACCESS_ENUM.ADMIN,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/exam/ExamManagerView.vue")
+            },{
+                path:'/list/examResultManger',
+                name:"考试成绩管理列表",
+                meta:{
+                    access:ACCESS_ENUM.ADMIN,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/exam/ExamResultManagerView.vue")
+            },{
+                path:'/list/userManger',
+                name:"用户管理",
+                meta:{
+                    access:ACCESS_ENUM.ADMIN,
+                    needLogin:true,
+                    ordinary:false,
+                },
+                component:()=>import("@/views/user/UserManagerView.vue")
+            }
+        ]
+    }
+,
+    {
+        path: '/user/userInfo',
+        name: "用户信息",
+        meta: {
+            // needLogin: true
+        },
+        component: () => import('@/views/user/UserInfoView.vue')
+    },
+    {
+        path: '/user/changePassword',
+        name: "修改密码",
+        meta: {
+            // needLogin: true
+        },
+        component: () => import('@/views/user/ChangePasswordView.vue')
+    }
+]
+
+export default routes;
